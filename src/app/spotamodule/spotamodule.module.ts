@@ -18,7 +18,7 @@ import {MatSelectModule} from '@angular/material/select';
 
 const appRoutes: Routes = [
   // { path: 'cities', component: CitiesComponent },
-  { path: '', component: HomeComponent }
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({

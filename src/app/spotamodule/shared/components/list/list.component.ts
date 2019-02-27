@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotaroomService } from '@app/spotamodule';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -12,7 +13,7 @@ export class ListComponent implements OnInit {
   propInfo: any;
   paramsId: string;
 
-  constructor(private spotaroomService: SpotaroomService) { }
+  constructor(private spotaroomService: SpotaroomService, private router: Router) { }
 
   ngOnInit() {
     // subs for updating list
@@ -30,7 +31,9 @@ export class ListComponent implements OnInit {
   }
 
   setList(type: string) {
-    this.spotaroomService.getPropertiesId(type, 'madrid').subscribe((data: any) => {
+    let cityParam = this.router.url.replace('/', '');
+    cityParam === '' ? cityParam = 'madrid' : cityParam = cityParam;
+    this.spotaroomService.getPropertiesId(type, cityParam).subscribe((data: any) => {
       console.log('ids: ', data);
       this.paramsId = this.spotaroomService.mapIds(data.data);
       this.spotaroomService.getPropertyInfo(this.paramsId).subscribe((details: any) => {
