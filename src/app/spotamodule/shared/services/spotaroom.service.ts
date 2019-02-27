@@ -17,41 +17,24 @@ export class SpotaroomService {
   private list = new BehaviorSubject<any>({});
   listObs = this.list.asObservable();
 
-  urlMarkers = 'https://www.spotahome.com/api/public/listings/search/markers/';   // madrid
-  //  'https://www.spotahome.com/api/public/listings/search/markers/madrid?type[]='; // apartments, rooms, studios and residences
+  urlMarkers = 'https://www.spotahome.com/api/public/listings/search/markers/';
   urlHomecards = 'https://www.spotahome.com/api/public/listings/search/homecards_ids?';
-  //  ids[]=145154&ids[]=145144
 
   constructor(private http: HttpClient) { }
 
-  getTest() { // testing service
-    return of(
-      {
-        totalElements: 332,
-        totalPages: 67,
-        content: [
-          { id: 1, name: 'Hydrogen' },
-          { id: 2, name: 'Helium' },
-          { id: 3, name: 'Lithium' },
-          { id: 4, name: 'Beryllium' },
-          { id: 5, name: 'Boron' },
-          { id: 6, name: 'Carbon' },
-          { id: 7, name: 'Nitrogen' },
-          { id: 8, name: 'Oxygen' },
-          { id: 9, name: 'Fluorine' },
-          { id: 10, name: 'Neon' },
-        ]
-      });
-  }
 
   getPropertiesId(type: string, city: string) {
-    // this.url = `http://sandbox-1.westeurope.cloudapp.azure.com:8081/api/cities/queryByPage?page=${a}&size=${b}`;
+    let url = '';
+    if (type === 'all') {
+      url = this.urlMarkers + city;
+    } else {
+      url = this.urlMarkers + city + '?type[]=' + type;
+    }
 
-    return this.http.get(this.urlMarkers + city + '?type[]=' + type)
+    return this.http.get(url)
       .pipe(
         catchError(this.handleError('getRooms', []))
       );
-    // return this.getTest(); //dev purposes
   }
 
   getPropertyInfo(paramsId: string) {

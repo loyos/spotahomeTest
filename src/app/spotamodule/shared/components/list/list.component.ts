@@ -15,18 +15,11 @@ export class ListComponent implements OnInit {
   constructor(private spotaroomService: SpotaroomService) { }
 
   ngOnInit() {
-    this.spotaroomService.getPropertiesId('rooms', 'madrid').subscribe((data: any) => {
-      console.log('ids: ', data);
-      this.paramsId = this.spotaroomService.mapIds(data.data);
-      this.spotaroomService.getPropertyInfo(this.paramsId).subscribe((details: any) => {
-        console.log('propInfo: ', details);
-        this.propInfo = details.data.homecards;
-        this.sortProperties(this.propInfo, 'ascending');
-        this.spotaroomService.setList(this.propInfo);
-      });
-    });
+    // subs for updating list
 
     this.spotaroomService.propertyTypeObs.subscribe(data => {
+      console.log('changing property type :', data);
+      this.updateList(data);
     });
     this.spotaroomService.sortTypeObs.subscribe(data => {
       if (this.propInfo) {
@@ -36,12 +29,29 @@ export class ListComponent implements OnInit {
     });
   }
 
+  setList(type: string) {
+    this.spotaroomService.getPropertiesId(type, 'madrid').subscribe((data: any) => {
+      console.log('ids: ', data);
+      this.paramsId = this.spotaroomService.mapIds(data.data);
+      this.spotaroomService.getPropertyInfo(this.paramsId).subscribe((details: any) => {
+        console.log('propInfo: ', details);
+        this.propInfo = details.data.homecards;
+        this.sortProperties(this.propInfo, 'ascending');
+        this.spotaroomService.setList(this.propInfo);
+      });
+    });
+  }
+
   sortProperties(data: any, sortType: string) {
     if (sortType === 'ascending') {
       data.sort((a: any, b: any) => (a.pricePerMonth > b.pricePerMonth) ? 1 : ((b.pricePerMonth > a.pricePerMonth) ? -1 : 0));
     } else {
       data.sort((a: any, b: any) => (a.pricePerMonth < b.pricePerMonth) ? 1 : ((b.pricePerMonth < a.pricePerMonth) ? -1 : 0));
     }
+  }
+
+  updateList(type: string) {
+    this.setList(type);
   }
 
 }

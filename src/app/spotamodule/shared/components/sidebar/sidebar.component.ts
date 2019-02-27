@@ -35,6 +35,7 @@ export class SidebarComponent implements OnInit {
 
   setType(val: any) {
     this.spotaroomService.setPropertyType(val);
+    this.selectedSort = 'ascending';
   }
 
   setSort(val: any) {
