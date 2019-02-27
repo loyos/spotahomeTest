@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from '@app/spotamodule';
-import { HeaderComponent } from '@app/spotamodule';
-import { ListComponent } from '@app/spotamodule';
-import { SidebarComponent } from '@app/spotamodule';
+import { HomeComponent } from './home/home.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { ListComponent } from './shared/components/list/list.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 
 // Angular Material
@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CardComponent } from './shared/components/card/card.component';
+import {MatSelectModule} from '@angular/material/select';
 
 const appRoutes: Routes = [
   // { path: 'cities', component: CitiesComponent },
@@ -20,7 +22,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ListComponent, SidebarComponent, HeaderComponent, HomeComponent],
+  declarations: [ListComponent, SidebarComponent, HeaderComponent, HomeComponent, CardComponent],
   imports: [
     RouterModule.forRoot(
       appRoutes
@@ -29,7 +31,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule
   ]
 })
 export class SpotamoduleModule { }

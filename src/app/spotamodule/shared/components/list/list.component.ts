@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpotaroomService } from '@app/spotamodule';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +8,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  propIds: any;
+  propInfo: any;
+  paramsId: string;
+
+  constructor(private spotaroomService: SpotaroomService) { }
 
   ngOnInit() {
+    this.spotaroomService.getPropertiesId('rooms', 'madrid').subscribe((data: any) => {
+      console.log('ids: ', data);
+      this.paramsId = this.spotaroomService.mapIds(data.data);
+      this.spotaroomService.getPropertyInfo(this.paramsId).subscribe((details: any) => {
+        console.log('propInfo: ', details);
+        this.propInfo = details.data.homecards;
+        this.sortProperties(this.propInfo, 'ascending');
+        this.spotaroomService.setList(this.propInfo);
+      });
+    });
+
+    this.spotaroomService.propertyTypeObs.subscribe(data => {
+    });
+    this.spotaroomService.sortTypeObs.subscribe(data => {
+      if (this.propInfo) {
+        this.sortProperties(this.propInfo, data);
+        this.spotaroomService.setList(this.propInfo);
+      }
+    });
+  }
+
+  sortProperties(data: any, sortType: string) {
+    if (sortType === 'ascending') {
+      data.sort((a: any, b: any) => (a.pricePerMonth > b.pricePerMonth) ? 1 : ((b.pricePerMonth > a.pricePerMonth) ? -1 : 0));
+    } else {
+      data.sort((a: any, b: any) => (a.pricePerMonth < b.pricePerMonth) ? 1 : ((b.pricePerMonth < a.pricePerMonth) ? -1 : 0));
+    }
   }
 
 }
