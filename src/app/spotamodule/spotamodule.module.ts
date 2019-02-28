@@ -17,7 +17,6 @@ import { CardComponent } from './shared/components/card/card.component';
 import {MatSelectModule} from '@angular/material/select';
 
 const appRoutes: Routes = [
-  // { path: 'cities', component: CitiesComponent },
   { path: '**', component: HomeComponent }
 ];
 

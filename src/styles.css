@@ -8,3 +8,31 @@ body, html{
 h1,h2,h3{
     font-family: 'Luckiest Guy', cursive;
 }
+
+button{
+    background-color: #3e8f32;
+    border: none;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0px 10px #136a21;
+}
+
+img:hover{
+    opacity: 0.4;
+    box-shadow: 5px 10px 20px #136a21;
+    cursor: pointer;
+}
+
+a{
+    background-color: #3e8f32;
+    border: none;
+    color: white;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0px 10px #136a21;
+}
+
+a:hover, button:hover{
+    text-decoration: none;
+    color: white;
+    opacity: 0.7;
+}
